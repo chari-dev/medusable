@@ -10,7 +10,7 @@ RUN apk add --no-cache \
     make \
     g++ && \
     corepack enable && \
-    ln -s /usr/bin/python3 /usr/bin/python
+    ln -sf /usr/bin/python3 /usr/bin/python
 
 WORKDIR /app
 
