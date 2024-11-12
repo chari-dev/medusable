@@ -38,6 +38,12 @@ pnpm project:setup
 pnpm dev
 ```
 
+### Default Admin User
+
+After setup, you can login to the admin dashboard with these credentials:
+- Email: medusable@ouestlabs.com
+- Password: medusable
+
 ## 🛠 Configuration
 
 ### Environment Variables
