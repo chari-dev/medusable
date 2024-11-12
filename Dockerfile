@@ -1,13 +1,11 @@
 # syntax=docker/dockerfile:1.4
 
-FROM node:20.18-slim AS base
+FROM node:20.18-alpine AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libc6 \
+RUN apk add --no-cache \
     python3 \
     make \
     g++ && \
