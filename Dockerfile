@@ -6,8 +6,13 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libc6 && \
-    corepack enable
+    apt-get install -y --no-install-recommends \
+    libc6 \
+    python3 \
+    make \
+    g++ && \
+    corepack enable && \
+    ln -s /usr/bin/python3 /usr/bin/python
 
 WORKDIR /app
 
