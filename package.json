@@ -1,0 +1,71 @@
+{
+  "name": "medusable",
+  "version": "0.0.0",
+  "description": "Portable medusajs backend.",
+  "author": {
+    "name": "Ouest Labs",
+    "url": "https://ouestlabs.com",
+    "email": "contact@ouestlabs.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "medusa develop",
+    "dev:email": "email dev --dir=./src/modules/email/templates --port=9090",
+    "build": "medusa build && node src/scripts/postBuild.js",
+    "start": "medusa start",
+    "start:prod": "medusa start --verbose",
+    "db:setup": "medusa db:setup --db medusable",
+    "db:create": "medusa db:create",
+    "db:migrate": "medusa db:migrate",
+    "db:generate": "medusa db:generate",
+    "db:sync-links": "medusa db:sync-links",
+    "db:seed": "medusa exec ./src/scripts/seed.ts",
+    "create-user": "medusa user -e medusable@ouestlabs.com -p medusable",
+    "docker:setup": "cp .env.template .env && docker compose up -d postgres redis && sleep 5 && pnpm project:setup",
+    "project:setup": "pnpm install && pnpm db:setup && pnpm db:seed && pnpm create-user",
+    "format": "prettier --write .",
+    "clean": "rm -rf .medusa .medusa-db node_modules"
+  },
+  "dependencies": {
+    "@medusajs/admin-sdk": "latest",
+    "@medusajs/auth": "latest",
+    "@medusajs/cli": "latest",
+    "@medusajs/event-bus-redis": "latest",
+    "@medusajs/file": "latest",
+    "@medusajs/file-local": "latest",
+    "@medusajs/framework": "latest",
+    "@medusajs/medusa": "latest",
+    "@medusajs/types": "latest",
+    "@medusajs/user": "latest",
+    "@medusajs/utils": "latest",
+    "@medusajs/workflow-engine-redis": "latest",
+    "@mikro-orm/core": "5.9.7",
+    "@mikro-orm/knex": "5.9.7",
+    "@mikro-orm/migrations": "5.9.7",
+    "@mikro-orm/postgresql": "5.9.7",
+    "@react-email/components": "^0.0.26",
+    "awilix": "^8.0.1",
+    "pg": "^8.13.0",
+    "resend": "4.0.1-alpha.0"
+  },
+  "devDependencies": {
+    "@medusajs/test-utils": "latest",
+    "@mikro-orm/cli": "5.9.7",
+    "@swc/core": "1.5.7",
+    "@types/node": "^20.16.10",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.18",
+    "prettier": "^3.2.5",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-email": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2",
+    "vite": "^5.2.11"
+  },
+  "packageManager": "pnpm@9.11.0",
+  "engines": {
+    "node": "20.x"
+  }
+}

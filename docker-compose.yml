@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - medusable-network
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_DB: medusable
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    networks:
+      - medusable-network
+    ports:
+      - 6380:6379
+  medusable:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: ghcr.io/ouestlabs/medusable:latest
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - medusable-network
+    environment:
+      STORE_CORS: "*"
+      ADMIN_CORS: "*"
+      AUTH_CORS: "*"
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: "super-secret"
+      COOKIE_SECRET: "super-secret"
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusable
+    volumes:
+      - uploads:/app/uploads
+      - static:/app/static
+
+volumes:
+  postgres_data:
+  redis_data:
+  uploads:
+  static:
+
+networks:
+  medusable-network:
+    driver: bridge
