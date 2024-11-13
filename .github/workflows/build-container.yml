@@ -31,7 +31,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_branches: main
-          default_bump: patch
+          commit_message_pattern: |
+            ^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: (.+)$
+          major_pattern: "^break:"
+          minor_pattern: "^feat:"
+          patch_pattern: "^fix:"
           tag_prefix: v
 
       - name: Set up QEMU
