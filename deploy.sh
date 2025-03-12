@@ -18,6 +18,10 @@ fi
 # Check if pnpm is installed
 if ! command -v pnpm &> /dev/null; then
     echo -e "${YELLOW}PNPM is not installed. Installing PNPM...${NC}"
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+    apt install -y nodejs
+    node -v
+    npm -v
     npm install -g pnpm@9.11.0
 fi
 
