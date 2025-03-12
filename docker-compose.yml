@@ -30,8 +30,6 @@ services:
       - redis
     networks:
       - medusable-network
-    ports:
-      - 9000:9000
     environment:
       STORE_CORS: "*"
       ADMIN_CORS: "*"
