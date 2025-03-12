@@ -28,6 +28,24 @@ pnpm docker:setup
 docker compose up -d
 ```
 
+### Using Deployment Scripts
+
+We provide two deployment scripts for different environments:
+
+```bash
+# For local/development deployment
+./deploy.sh
+
+# For production deployment
+./deploy-production.sh
+```
+
+The production script includes additional features:
+- Database backups before deployment
+- Health checks for services
+- Secure secrets generation
+- Handling of existing databases
+
 ### Local Development
 
 ```bash
