@@ -4,6 +4,9 @@ FROM node:20.18-alpine AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV COREPACK_ENABLE_STRICT=0
+ENV COREPACK_ENABLE_NETWORK=0
+ENV NODE_NO_WARNINGS=1
 
 RUN apk add --no-cache \
     python3 \
@@ -17,15 +20,15 @@ WORKDIR /app
 
 FROM base AS prod-deps
 
-COPY package.json pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+COPY package.json pnpm-lock.yaml .npmrc ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store /usr/local/bin/pnpm install --prod --frozen-lockfile
 
 FROM base AS builder
 
-COPY package.json pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY package.json pnpm-lock.yaml .npmrc ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store /usr/local/bin/pnpm install --frozen-lockfile
 COPY . .
-RUN pnpm build
+RUN /usr/local/bin/pnpm build
 
 FROM base
 
@@ -40,4 +43,4 @@ VOLUME ["/app/uploads", "/app/static"]
 
 EXPOSE 9000
 
-CMD ["pnpm", "start:prod"]
+CMD ["/usr/local/bin/pnpm", "start:prod"]
