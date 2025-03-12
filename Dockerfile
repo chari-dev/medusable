@@ -9,7 +9,8 @@ RUN apk add --no-cache \
     python3 \
     make \
     g++ && \
-    corepack enable && \
+    corepack disable && \
+    npm install -g pnpm@9.11.0 && \
     ln -sf /usr/bin/python3 /usr/bin/python
 
 WORKDIR /app
